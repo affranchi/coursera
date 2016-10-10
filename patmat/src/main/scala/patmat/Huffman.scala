@@ -80,7 +80,8 @@ object Huffman {
       }
       count(chars, List())
     }
-  
+
+
   /**
    * Returns a list of `Leaf` nodes for a given frequency table `freqs`.
    *
