@@ -71,13 +71,13 @@ trait Solver extends GameDef {
   /**
    * The stream of all paths that begin at the starting block.
    */
-  lazy val pathsFromStart: Stream[(Block, List[Move])] = from( (startBlock, List[Move]()) #:: Stream[(Block, List[Move])](), Set())
+  lazy val pathsFromStart: Stream[(Block, List[Move])] = from( (startBlock, List[Move]() ) #:: Stream[(Block, List[Move])](), Set())
 
   /**
    * Returns a stream of all possible pairs of the goal block along
    * with the history how it was reached.
    */
-  lazy val pathsToGoal: Stream[(Block, List[Move])] = pathsFromStart filter { case (b, _) => b.b1 == goal && b.b2 == goal }
+  lazy val pathsToGoal: Stream[(Block, List[Move])] = pathsFromStart.filter( p => p match { case (b, _) => b.b1 == goal && b.b2 == goal } )
 
   /**
    * The (or one of the) shortest sequence(s) of moves to reach the
