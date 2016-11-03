@@ -1,7 +1,5 @@
 package streams
 
-import common._
-
 /**
  * This component implements the solver for the Bloxorz game
  */
@@ -10,7 +8,7 @@ trait Solver extends GameDef {
   /**
    * Returns `true` if the block `b` is at the final position
    */
-  def done(b: Block): Boolean = ( b.isStanding && b.b1 == goal )
+  def done(b: Block): Boolean = b.isStanding && b.b1 == goal
 
   /**
    * This function takes two arguments: the current block `b` and
@@ -63,11 +61,11 @@ trait Solver extends GameDef {
    */
   def from(initial: Stream[(Block, List[Move])],
            explored: Set[Block]): Stream[(Block, List[Move])] = initial match {
-    case (block, moves) #:: tail => {
-      var newEps = explored + block;
-      var newNbs = newNeighborsOnly(neighborsWithHistory(block, moves), newEps)
+    case (block, moves) #:: tail =>
+      val newEps = explored + block
+      val newNbs = newNeighborsOnly(neighborsWithHistory(block, moves), newEps)
       newNbs ++ from(tail ++ newNbs, newEps)
-    }
+    case Stream.Empty => initial
   }
 
   /**
@@ -79,7 +77,7 @@ trait Solver extends GameDef {
    * Returns a stream of all possible pairs of the goal block along
    * with the history how it was reached.
    */
-  lazy val pathsToGoal: Stream[(Block, List[Move])] = pathsFromStart filter { case (b, _) => ( b.b1 == goal && b.b2 == goal) }
+  lazy val pathsToGoal: Stream[(Block, List[Move])] = pathsFromStart filter { case (b, _) => b.b1 == goal && b.b2 == goal }
 
   /**
    * The (or one of the) shortest sequence(s) of moves to reach the
